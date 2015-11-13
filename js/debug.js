@@ -1,7 +1,7 @@
 var _LTracker = _LTracker || [];
 _LTracker.push({'logglyKey': '6d1764a0-1603-4f80-af03-7e9ea0152e93',
 'sendConsoleErrors' : true,
-'tag' : 'asm'  });
+'tag' : 'DnlTest'  });
 
 function DebugLog ()
 {
