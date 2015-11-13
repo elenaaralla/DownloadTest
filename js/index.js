@@ -15,7 +15,7 @@ function onDeviceReady(){
 function onInitFs(fs) {
 
 
-    var fileURL = "cdvfile://localhost/persistent/file.png";
+    var fileURL = 'file:///android_asset/www/res/db/' //"cdvfile://localhost/persistent/file.png";
 
     var fileTransfer = new FileTransfer();
 
