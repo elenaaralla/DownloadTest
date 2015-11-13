@@ -15,21 +15,31 @@ function onDeviceReady(){
 function onInitFs(fs) {
 
 
-    var fileURL = "cdvfile://localhost/persistant/file.png";
+    var fileURL = "cdvfile://localhost/persistent/file.png";
 
     var fileTransfer = new FileTransfer();
+
     var uri = encodeURI("http://upload.wikimedia.org/wikipedia/commons/6/64/Gnu_meditate_levitate.png");
+
+    alert("FileTransfer exists!!");
+    $("#result").append("<br>FileTransfer exists!!");
+    debug.log("ERROR","OK - FileTransfer exists!!");
 
     fileTransfer.download(
             uri,
             fileURL,
             function(entry) {
                 console.log("download complete: " + entry.fullPath);
+                alert("download complete: " + entry.fullPath);
+                $("#result").append("<br>download complete!");
+                debug.log("ERROR","download complete: " + entry.toURL());
             },
             function(error) {
-                console.log("download error source " + error.source);
-                console.log("download error target " + error.target);
-                console.log("upload error code" + error.code);
+                alert("error!");
+                $("#result").append("<br>download error source " + error.source);
+                $("#result").append("<br>download error target " + error.target);
+                $("#result").append("<br>download error code" + error.code);
+                debug.log("ERROR",error);                
             },
             false,
             {
