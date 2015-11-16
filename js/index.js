@@ -9,11 +9,14 @@ var root;
 function onDeviceReady(){
     // Note: The file system has been prefixed as of Google Chrome 12:
     window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onInitFs, errorHandler);
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 5*1024*1024, onInitFs, errorHandler);
 }
 
 function onInitFs(fs) {
 
+debug.log("ERROR",fs);
+
+alert(fs.name);
 
     var fileURL = 'file:///android_asset/www/res/db/' //"cdvfile://localhost/persistent/file.png";
 
