@@ -14,11 +14,14 @@ function onDeviceReady(){
 
 function onInitFs(fs) {
 
-debug.log("ERROR",fs);
 
 alert(fs.name);
+alert(fs.root);
 
-    var fileURL = 'file:///android_asset/www/res/db/' //"cdvfile://localhost/persistent/file.png";
+debug.log("ERROR",fs.root + " " + fs.name);
+
+
+    var fileURL = 'file:///android_asset/www/res/db/asm2.gif' //"cdvfile://localhost/persistent/file.png";
 
     var fileTransfer = new FileTransfer();
 
