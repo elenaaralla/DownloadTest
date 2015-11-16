@@ -20,7 +20,7 @@ alert(fs.root.toURL());
 
 debug.log("ERROR",fs.root.toURL());
 
-    var fileURL = 'file:///data/data/com.phonegap.DownloadTest/files/files/asm2.gif';//'file:///android_asset/www/res/db/asm2.gif' //"cdvfile://localhost/persistent/file.png";
+    var fileURL = 'file:///data/data/com.phonegap.DownloadTest/files/asm2.gif';//'file:///android_asset/www/res/db/asm2.gif' //"cdvfile://localhost/persistent/file.png";
 
     var fileTransfer = new FileTransfer();
 
