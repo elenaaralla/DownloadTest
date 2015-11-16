@@ -8,8 +8,13 @@ var root;
 
 function onDeviceReady(){
     // Note: The file system has been prefixed as of Google Chrome 12:
+
+    $("#result").append("Start filetransfer");
+alert(22);
     window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+alert(11);
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 5*1024*1024, onInitFs, errorHandler);
+alert(68);
 }
 
 function onInitFs(fs) {
