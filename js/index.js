@@ -10,16 +10,17 @@ function onDeviceReady(){
     // Note: The file system has been prefixed as of Google Chrome 12:
 
     $("#result").append("Start filetransfer");
-alert(22);
+
     window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-alert(11);
+    debug.log("ERROR",window.requestFileSystem);
+
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 5*1024*1024, onInitFs, errorHandler);
-alert(68);
+    
+    debug.log("ERROR","device ready");
 }
 
+
 function onInitFs(fs) {
-
-
 
 alert(fs.root.toURL());
 
@@ -50,7 +51,7 @@ debug.log("ERROR",fs.root.toURL());
                 $("#result").append("<br>download error target " + error.target);
                 $("#result").append("<br>download error code" + error.code);
                 debug.log("ERROR",error);                
-            }
+            },
             true,
             {
                 headers: {
