@@ -15,13 +15,12 @@ function onDeviceReady(){
 function onInitFs(fs) {
 
 
-alert(fs.name);
-alert(fs.root);
 
-debug.log("ERROR",fs.root + " " + fs.name);
+alert(fs.root.toURL());
 
+debug.log("ERROR",fs.root.toURL());
 
-    var fileURL = 'file:///android_asset/www/res/db/asm2.gif' //"cdvfile://localhost/persistent/file.png";
+    var fileURL = fs.root.toURL() + '/asm2.gif';//'file:///android_asset/www/res/db/asm2.gif' //"cdvfile://localhost/persistent/file.png";
 
     var fileTransfer = new FileTransfer();
 
@@ -46,12 +45,6 @@ debug.log("ERROR",fs.root + " " + fs.name);
                 $("#result").append("<br>download error target " + error.target);
                 $("#result").append("<br>download error code" + error.code);
                 debug.log("ERROR",error);                
-            },
-            false,
-            {
-                headers: {
-                    "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
-                }
             }
     );
 }
