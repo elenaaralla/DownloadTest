@@ -19,7 +19,7 @@ function onInitFs(fs) {
 
     var fileTransfer = new FileTransfer();
 
-    var uri = encodeURI("http://upload.wikimedia.org/wikipedia/commons/6/64/Gnu_meditate_levitate.png");
+    var uri = encodeURI("http://192.168.0.10/asm/asm2.gif");
 
     alert("FileTransfer exists!!");
     $("#result").append("<br>FileTransfer exists!!");
