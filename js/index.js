@@ -20,7 +20,7 @@ alert(fs.root.toURL());
 
 debug.log("ERROR",fs.root.toURL());
 
-    var fileURL = 'file:///data/data/com.phonegap.DownloadTest/files/asm2.gif';//'file:///android_asset/www/res/db/asm2.gif' //"cdvfile://localhost/persistent/file.png";
+    var fileURL = fs.root.toURL() + '/asm2.gif';//'file:///android_asset/www/res/db/asm2.gif' //"cdvfile://localhost/persistent/file.png";
 
     var fileTransfer = new FileTransfer();
 
@@ -46,6 +46,12 @@ debug.log("ERROR",fs.root.toURL());
                 $("#result").append("<br>download error code" + error.code);
                 debug.log("ERROR",error);                
             }
+            true,
+            {
+                headers: {
+                    Connection: "close"
+                }
+            }            
     );
 }
 
