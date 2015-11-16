@@ -11,7 +11,7 @@ function onDeviceReady(){
 
     $("#result").append("Start filetransfer");
 
-    window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem
+    window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 5*1024*1024, onInitFs, errorHandler);
 }
@@ -21,7 +21,7 @@ function onInitFs(fs) {
 
     debug.log("ERROR","onInitFS: " + fs.root.toURL());
 
-    var fileURL = fs.root.toURL() + 'asm2.gif';//'file:///android_asset/www/res/db/asm2.gif' //"cdvfile://localhost/persistent/file.png";
+    var fileURL = "cdvfile://localhost/persistent/download/asm2.gif"; //fs.root.toURL() + 'asm2.gif';//'file:///android_asset/www/res/db/asm2.gif'
 
     var fileTransfer = new FileTransfer();
 
