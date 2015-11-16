@@ -11,22 +11,17 @@ function onDeviceReady(){
 
     $("#result").append("Start filetransfer");
 
-    window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-    debug.log("ERROR",window.requestFileSystem);
+    window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 5*1024*1024, onInitFs, errorHandler);
-    
-    debug.log("ERROR","device ready");
 }
 
 
 function onInitFs(fs) {
 
-alert(fs.root.toURL());
+    debug.log("ERROR","onInitFS: " + fs.root.toURL());
 
-debug.log("ERROR",fs.root.toURL());
-
-    var fileURL = fs.root.toURL() + '/asm2.gif';//'file:///android_asset/www/res/db/asm2.gif' //"cdvfile://localhost/persistent/file.png";
+    var fileURL = fs.root.toURL() + 'asm2.gif';//'file:///android_asset/www/res/db/asm2.gif' //"cdvfile://localhost/persistent/file.png";
 
     var fileTransfer = new FileTransfer();
 
@@ -52,7 +47,7 @@ debug.log("ERROR",fs.root.toURL());
                 $("#result").append("<br>download error code" + error.code);
                 debug.log("ERROR",error);                
             },
-            true,
+            false,
             {
                 headers: {
                     Connection: "close"
@@ -86,7 +81,7 @@ function errorHandler(e) {
       break;
   };
 
-  alert('Error: ' + msg);
+  debug.log("ERROR",'Error: ' + msg);
 }
 
 
