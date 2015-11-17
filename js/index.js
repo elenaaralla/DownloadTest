@@ -62,10 +62,10 @@ function onDeviceReady(){
           $("#result").append("<br>got main dir:" + dir);
           debug.log("ERROR","got main dir:" + dir);          
           dir.getFile("log.txt", {create:true}, function(file) {
-            console.log("got the file", file);
+            console.log("got the file", file.path);
 
-            $("#result").append("<br>got the file:" +  file);
-            debug.log("ERROR","got the file:" +  file);  
+            $("#result").append("<br>got the file:" +  file.path);
+            debug.log("ERROR","got the file:" +  file.path);  
 
             logOb = file;
             writeLog("App started");      
