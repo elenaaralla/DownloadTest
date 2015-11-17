@@ -25,7 +25,8 @@
     <preference name="android-minSdkVersion" value="10" />
     <preference name="android-installLocation" value="auto" />
     <preference name="AndroidPersistentFileLocation" value="Internal" />
-    <preference name="AndroidExtraFilesystems" value="files,files-external,documents,sdcard,cache,cache-external,root" />    
+    <preference name="iosPersistentFileLocation" value="Library" />     
+    <preference name="BackupWebStorage" value="none" />
 
     <!--
     <gap:plugin name="org.apache.cordova.battery-status" source="npm" />

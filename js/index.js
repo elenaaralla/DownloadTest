@@ -59,13 +59,13 @@ function onDeviceReady(){
 
       window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
           console.log("got main dir",dir);
-          $("#result").append("<br>got main dir:" + dir);
-          debug.log("ERROR","got main dir:" + dir);          
+          $("#result").append("<br>got main dir:" + dir.toInternalURL());
+          debug.log("ERROR","got main dir:" + dir.toInternalURL());          
           dir.getFile("log.txt", {create:true}, function(file) {
-            console.log("got the file", file.path);
+            console.log("got the file", file);
 
-            $("#result").append("<br>got the file:" +  file.path);
-            debug.log("ERROR","got the file:" +  file.path);  
+            $("#result").append("<br>got the file:" +  file.toInternalURL());
+            debug.log("ERROR","got the file:" +  file.toInternalURL());  
 
             logOb = file;
             writeLog("App started");      
