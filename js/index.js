@@ -59,12 +59,12 @@ function onDeviceReady(){
 
       window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
           console.log("got main dir",dir);
-          $("#result").append("<br>got main dir:" + dir.toInternalURL());
+          $("#result").append("<br>got main dir:" + dir.toURL());
           debug.log("ERROR","got main dir:" + dir.toInternalURL());          
           dir.getFile("log.txt", {create:true}, function(file) {
             console.log("got the file", file);
 
-            $("#result").append("<br>got the file:" +  file.toInternalURL());
+            $("#result").append("<br>got the file:" +  file.toURL());
             debug.log("ERROR","got the file:" +  file.toInternalURL());  
 
             logOb = file;
@@ -72,7 +72,7 @@ function onDeviceReady(){
           });
         });
 
-
+        justForTesting();
 
   }
   catch(err) 
@@ -80,6 +80,33 @@ function onDeviceReady(){
       $("#result").append("<br>Catch errors:" + err);
       debug.log("ERROR",err);
   }
+
+}
+
+function writeLog(str) {
+  if(!logOb) return;
+  var log = str + " [" + (new Date()) + "]\n";
+  console.log("going to log "+log);
+  logOb.createWriter(function(fileWriter) {
+    
+    fileWriter.seek(fileWriter.length);
+    
+    var blob = new Blob([log], {type:'text/plain'});
+    fileWriter.write(blob);
+    console.log("ok, in theory i worked");
+  }, fail);
+}
+
+function justForTesting() {
+  logOb.file(function(file) {
+    var reader = new FileReader();
+
+    reader.onloadend = function(e) {
+      console.log(this.result);
+    };
+
+    reader.readAsText(file);
+  }, fail);
 
 }
 
