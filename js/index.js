@@ -27,20 +27,23 @@ function onDeviceReady(){
 
 
   function onSuccess(fileSystem) {
-  // methods/properties for file path:
-  // fileSystem.name, fileSystem.root.toURL(), fileSystem.root.toInternalURL(), fileSystem.root.nativeURL
+    // methods/properties for file path:
+    // fileSystem.name, fileSystem.root.toURL(), fileSystem.root.toInternalURL(), fileSystem.root.nativeURL
 
-  gFileSystemVar = fileSystem;
-  if(device.platform === 'iOS'){
-  gPersistantPath = fileSystem.root.toInternalURL(); 
+    gFileSystemVar = fileSystem;
+    if(device.platform === 'iOS'){
+      gPersistantPath = fileSystem.root.toInternalURL(); 
+      debug.log("ERROR","gPersistantPath:" + gPersistantPath);
+    }
+    else{
+      gPersistantPath = cordova.file.externalDataDirectory;
+      debug.log("ERROR","gPersistantPath:" + gPersistantPath);
+    }
   }
-  else{
-  gPersistantPath = cordova.file.externalDataDirectory;
-  }
-  }
+
   function onError(fileSystem) {
-  // Error ocurred while calling requestFileSystem.
-  debug.log("ERROR","Error in accessing requestFileSystem" + fileSystem.name);
+    // Error ocurred while calling requestFileSystem.
+    debug.log("ERROR","Error in accessing requestFileSystem" + fileSystem.name);
   }
 
   try
