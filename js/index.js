@@ -30,55 +30,53 @@ function onDeviceReady(){
     // methods/properties for file path:
     // fileSystem.name, fileSystem.root.toURL(), fileSystem.root.toInternalURL(), fileSystem.root.nativeURL
 
-    gFileSystemVar = fileSystem;
+    //gFileSystemVar = fileSystem;
     if(device.platform === 'iOS'){
       gPersistantPath = fileSystem.root.toInternalURL(); 
-      debug.log("ERROR","gPersistantPath:" + gPersistantPath);
+      debug.log("ERROR","<br>IOS persistent file path: " + gPersistantPath);
     }
     else{
       gPersistantPath = cordova.file.externalDataDirectory;
-      debug.log("ERROR","gPersistantPath:" + gPersistantPath);
+      debug.log("ERROR","<br>ANDROID persistent file path: " + gPersistantPath);
     }
+
+    dnloadRemoteFile(gPersistantPath);
+
   }
 
   function onError(fileSystem) {
     // Error ocurred while calling requestFileSystem.
+    $("#result").append("<br>Error in accessing requestFileSystem" + fileSystem.name);
     debug.log("ERROR","Error in accessing requestFileSystem" + fileSystem.name);
   }
 
   try
   {
       // request the persistent file system
+      $("#result").append("<br>Request the persistent file system");
       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onSuccess, onError); 
   }
   catch(err) 
   {
+      $("#result").append("<br>Catch errors:" + err);
       debug.log("ERROR",err);
-      debug.log("ERROR","No device detected!");
   }
 
 }
 
 
-function onInitFs(fs) {
+function dnloadRemoteFile(dirpath) {
 
-    debug.log("ERROR","onInitFS: " + fs.root.toURL());
-
-    var fileURL = "cdvfile://localhost/persistent/download/asm2.gif"; //fs.root.toURL() + 'asm2.gif';//'file:///android_asset/www/res/db/asm2.gif'
+    var fileURL = dirpath + "asm2.gif";
 
     var fileTransfer = new FileTransfer();
 
     var uri = encodeURI("http://192.168.0.10/asm/asm2.gif");
 
-    alert("FileTransfer exists!!");
-    $("#result").append("<br>FileTransfer exists!!");
-    debug.log("ERROR","OK - FileTransfer exists!!");
-
     fileTransfer.download(
             uri,
             fileURL,
             function(entry) {
-                console.log("download complete: " + entry.fullPath);
                 alert("download complete: " + entry.fullPath);
                 $("#result").append("<br>download complete!");
                 debug.log("ERROR","download complete: " + entry.toURL());
@@ -99,7 +97,7 @@ function onInitFs(fs) {
     );
 }
 
-
+/*
 function errorHandler(e) {
   var msg = '';
 
@@ -126,7 +124,7 @@ function errorHandler(e) {
 
   debug.log("ERROR",'Error: ' + msg);
 }
-
+*/
 
 /*
 function onDeviceReady() {
