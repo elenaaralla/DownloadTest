@@ -13,7 +13,15 @@ function onDeviceReady(){
 
     window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem
 
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 5*1024*1024, onInitFs, errorHandler);
+    try
+    {
+      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onInitFs, errorHandler);
+    }
+    catch(err) 
+    {
+        debug.log("ERROR",err);
+        debug.log("ERROR","No device detected!");
+    }
 }
 
 
@@ -87,24 +95,18 @@ function errorHandler(e) {
 
 /*
 function onDeviceReady() {
-
-	$("#result").append("Start filetransfer");
-
-	apiURL = "http://192.168.0.10/asxmob/api/attachments/0/test";
-
+  $("#result").append("Start filetransfer");
+  apiURL = "http://192.168.0.10/asxmob/api/attachments/0/test";
     uri = encodeURI(apiURL);   
     fileName = "VOLANTINO 2015 pdf.pdf";
     fileURL = "cdvfile://localhost/persistent/" + fileName;
-
     try
     {
-		var fileTransfer = new FileTransfer();
-
-    	alert("FileTransfer exists!!");
-    	$("#result").append("<br>FileTransfer exists!!");
-    	debug.log("ERROR","OK - FileTransfer exists!!");
-
-    	fileTransfer.download(uri, fileURL,
+    var fileTransfer = new FileTransfer();
+      alert("FileTransfer exists!!");
+      $("#result").append("<br>FileTransfer exists!!");
+      debug.log("ERROR","OK - FileTransfer exists!!");
+      fileTransfer.download(uri, fileURL,
         function (entry) {
             alert("download complete! ")
             $("#result").append("<br>download complete!");
