@@ -95,25 +95,6 @@ function dnloadRemoteFile(gPersistantPath) {
                 }
             }            
     );
-
-
-var fileTransfer = new FileTransfer();
-var uri = encodeURI("http://some.server.com/download.php");
-
-fileTransfer.download(
-uri,
-fileURL,
-function(entry) {
-console.log("download complete: " + entry.toURL());
-},
-function(error) {
-console.log("download error source " + error.source);
-console.log("download error target " + error.target);
-console.log("upload error code" + error.code);
-},
-);
-
-
 }
 
 /*
