@@ -67,7 +67,8 @@ function onDeviceReady(){
 
 function dnloadRemoteFile(gPersistantPath) {
 
-    var fileURL = gPersistantPath + "/asm2.gif"; 
+    //gPersistantPath = file:///mnt/sdcard/Android/data/com.phonegap.DownloadTest/files/
+    var fileURL = gPersistantPath + "asm2.gif"; 
 
     var fileTransfer = new FileTransfer();
 
