@@ -65,9 +65,9 @@ function onDeviceReady(){
 }
 
 
-function dnloadRemoteFile(dirpath) {
+function dnloadRemoteFile(gPersistantPath) {
 
-    var fileURL = dirpath + "asm2.gif";
+    var fileURL = gPersistantPath + "/asm2.gif"; 
 
     var fileTransfer = new FileTransfer();
 
@@ -95,6 +95,25 @@ function dnloadRemoteFile(dirpath) {
                 }
             }            
     );
+
+
+var fileTransfer = new FileTransfer();
+var uri = encodeURI("http://some.server.com/download.php");
+
+fileTransfer.download(
+uri,
+fileURL,
+function(entry) {
+console.log("download complete: " + entry.toURL());
+},
+function(error) {
+console.log("download error source " + error.source);
+console.log("download error target " + error.target);
+console.log("upload error code" + error.code);
+},
+);
+
+
 }
 
 /*
