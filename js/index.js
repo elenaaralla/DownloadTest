@@ -7,6 +7,7 @@ var debug = new DebugLog();
 var root;
 
 function onDeviceReady(){
+    /*
     // Note: The file system has been prefixed as of Google Chrome 12:
 
     $("#result").append("Start filetransfer");
@@ -21,7 +22,38 @@ function onDeviceReady(){
     {
         debug.log("ERROR",err);
         debug.log("ERROR","No device detected!");
-    }
+    }*/
+
+
+
+  function onSuccess(fileSystem) {
+  // methods/properties for file path:
+  // fileSystem.name, fileSystem.root.toURL(), fileSystem.root.toInternalURL(), fileSystem.root.nativeURL
+
+  gFileSystemVar = fileSystem;
+  if(device.platform === 'iOS'){
+  gPersistantPath = fileSystem.root.toInternalURL(); 
+  }
+  else{
+  gPersistantPath = cordova.file.externalDataDirectory;
+  }
+  }
+  function onError(fileSystem) {
+  // Error ocurred while calling requestFileSystem.
+  debug.log("ERROR","Error in accessing requestFileSystem" + fileSystem.name);
+  }
+
+  try
+  {
+      // request the persistent file system
+      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onSuccess, onError); 
+  }
+  catch(err) 
+  {
+      debug.log("ERROR",err);
+      debug.log("ERROR","No device detected!");
+  }
+
 }
 
 
