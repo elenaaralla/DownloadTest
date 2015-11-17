@@ -55,6 +55,25 @@ function onDeviceReady(){
       // request the persistent file system
       $("#result").append("<br>Request the persistent file system");
       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onSuccess, onError); 
+
+
+      window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
+          console.log("got main dir",dir);
+          $("#result").append("<br>got main dir:" + dir);
+          debug.log("ERROR","got main dir:" + dir);          
+          dir.getFile("log.txt", {create:true}, function(file) {
+            console.log("got the file", file);
+
+            $("#result").append("<br>got the file:" +  file);
+            debug.log("ERROR","got the file:" +  file);  
+
+            logOb = file;
+            writeLog("App started");      
+          });
+        });
+
+
+
   }
   catch(err) 
   {
