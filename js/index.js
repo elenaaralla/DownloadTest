@@ -116,11 +116,12 @@ function justForTesting() {
 function dnloadRemoteFile(gPersistantPath) {
 
     //gPersistantPath = file:///mnt/sdcard/Android/data/com.phonegap.DownloadTest/files/
-    var fileURL = gPersistantPath + "VOLANTINO2015.pdf"; 
+    var fileURL = gPersistantPath + "test.pdf"; 
 
     var fileTransfer = new FileTransfer();
 
-    var uri = encodeURI("http://192.168.0.10/asm/VOLANTINO2015.pdf");
+    ///api/attachments/" + attach_id + "/test
+    var uri = encodeURI("http://192.168.0.10/asxmob/api/attachments/0/test");
 
     fileTransfer.download(
             uri,
