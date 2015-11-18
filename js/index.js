@@ -56,7 +56,7 @@ function onDeviceReady(){
       $("#result").append("<br>Request the persistent file system");
       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onSuccess, onError); 
 
-
+/*
       window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
           console.log("got main dir",dir);
           $("#result").append("<br>got main dir:" + dir.toURL());
@@ -73,6 +73,7 @@ function onDeviceReady(){
         });
 
         justForTesting();
+        */
 
   }
   catch(err) 
@@ -83,6 +84,7 @@ function onDeviceReady(){
 
 }
 
+/*
 function writeLog(str) {
   if(!logOb) return;
   var log = str + " [" + (new Date()) + "]\n";
@@ -109,16 +111,16 @@ function justForTesting() {
   }, fail);
 
 }
-
+*/
 
 function dnloadRemoteFile(gPersistantPath) {
 
     //gPersistantPath = file:///mnt/sdcard/Android/data/com.phonegap.DownloadTest/files/
-    var fileURL = gPersistantPath + "asm2.gif"; 
+    var fileURL = gPersistantPath + "VOLANTINO2015.pdf"; 
 
     var fileTransfer = new FileTransfer();
 
-    var uri = encodeURI("http://192.168.0.10/asm/asm2.gif");
+    var uri = encodeURI("http://192.168.0.10/asm/VOLANTINO2015.pdf");
 
     fileTransfer.download(
             uri,
