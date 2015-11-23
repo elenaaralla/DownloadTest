@@ -63,22 +63,9 @@ function onDeviceReady(){
     }
 
   function gotFS(fileSystem) {
-
-    alert(fileSystem);
-      if(device.platform === 'iOS'){
-          gPersistantPath = fileSystem.root.toInternalURL();
-          debug.log("ERROR","<br>IOS persistent file path: " + gPersistantPath);
-      }
-      else{
-          gPersistantPath = cordova.file.externalDataDirectory;
-          debug.log("ERROR","<br>ANDROID persistent file path: " + gPersistantPath);
-      }
-alert(gPersistantPath);
-      gotDir(gPersistantPath);
-
-
-      //fileSystem.root.getDirectory("MyDIR", { create: true }, gotDir);
-      debug.log("ERROR",gPersistantPath);
+      alert("gotFS:" + fileSystem);
+      fileSystem.root.getDirectory("MyDIR", { create: true }, gotDir, fail);
+      debug.log("ERROR","gotFS:" + fileSystem);
       
   }
 
@@ -105,10 +92,9 @@ alert(gPersistantPath);
           debug.log("ERROR",error);
       });
   }
-  function fail() {
-      console.log('getFS failed');
-      debug.log("ERROR","write success");
-      alert("get filesystem fails");
+  function fail(error) {
+      debug.log("ERROR",error);
+      alert(error);
   }
 }
 
