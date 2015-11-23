@@ -63,14 +63,14 @@ function onDeviceReady(){
     }
 
   function gotFS(fileSystem) {
-      alert("gotFS:" + fileSystem);
+      alert("gotFS:" + fileSystem.toURL());
       fileSystem.root.getDirectory("MyDIR", { create: true }, gotDir, fail);
       debug.log("ERROR","gotFS:" + fileSystem);
       
   }
 
   function gotDir(dirEntry) {
-      alert("gotDir");
+      alert("gotDir:" + dirEntry.toURL());
       dirEntry.getFile("MyFILE" + dte + ".txt", { create: true, exclusive: false }, gotFile);
       debug.log("ERROR",dirEntry);
   }
