@@ -29,8 +29,11 @@ function onDeviceReady(){
         success: function (response) { 
           alert(response);
           fileData = response.d;
-          UTF8_STR = new Uint8Array(response.d);  // Convert to UTF-8...                
+          alert(fileData);
+          UTF8_STR = new Uint8Array(response.d);  // Convert to UTF-8...    
+          alert(UTF8_STR);            
           BINARY_ARR = UTF8_STR.buffer; // Convert to buffer...
+          alert(BINARY_ARR);    
           getFS();  
         },
         error: function (error) {
@@ -61,6 +64,7 @@ function onDeviceReady(){
 
   function gotFS(fileSystem) {
 
+    alert(fileSystem);
       if(device.platform === 'iOS'){
           gPersistantPath = fileSystem.root.toInternalURL();
           debug.log("ERROR","<br>IOS persistent file path: " + gPersistantPath);
@@ -69,13 +73,13 @@ function onDeviceReady(){
           gPersistantPath = cordova.file.externalDataDirectory;
           debug.log("ERROR","<br>ANDROID persistent file path: " + gPersistantPath);
       }
-
+alert(gPersistantPath);
       gotDir(gPersistantPath);
 
 
       //fileSystem.root.getDirectory("MyDIR", { create: true }, gotDir);
       debug.log("ERROR",gPersistantPath);
-      alert(gPersistantPath);
+      
   }
 
   function gotDir(dirEntry) {
