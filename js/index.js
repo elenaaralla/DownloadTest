@@ -7,6 +7,89 @@ var debug = new DebugLog();
 var root;
 
 function onDeviceReady(){
+
+    var dte = new Date(), attachApi, fileData, UTF8_STR, BINARY_ARR, dataString = JSON.stringify({
+        accountID: '309'
+    });
+
+
+    cAttachId = 885;
+    method = "GET";
+    apiPath = "/api/attachments/" + cAttachId + "/test";   
+    bodyContent = "";
+
+    attachApi = "http://192.168.0.10/asxmob" + apiPath;
+
+    $.ajax({
+        url: attachApi,
+        type: method,
+        headers: {'Accept':'application/octet-stream', 'Timestamp':'123456', 'Authentication':'abcdefg'},     
+        crossDomain: false,
+        //dataType: 'application/octet-stream',
+        success: function (response) { 
+          alert(response);
+          fileData = response.d;
+          UTF8_STR = new Uint8Array(response.d);  // Convert to UTF-8...                
+          BINARY_ARR = UTF8_STR.buffer; // Convert to buffer...
+          getFS();  
+        },
+        error: function (error) {
+            alert(error);
+            debug.log("ERROR",error);
+        }
+    });
+
+
+    function getFS() {
+     try
+      {
+        debug.log("ERROR","getFS");
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+      }
+      catch(err) 
+      {
+
+          debug.log("ERROR",err);
+          debug.log("ERROR","No device detected!");
+        attachUri = encodeURI(attachApi);   
+        document.location.href = attachUri;          
+      }
+
+
+    }
+
+  function gotFS(fileSystem) {
+      fileSystem.root.getDirectory("MyDIR", { create: true }, gotDir);
+      debug.log("ERROR",fileSystem);
+  }
+
+  function gotDir(dirEntry) {
+      dirEntry.getFile("MyFILE" + dte + ".pdf", { create: true, exclusive: false }, gotFile);
+      debug.log("ERROR",dirEntry);
+  }
+
+  function gotFile(fileEntry) {
+      fileEntry.createWriter(function (writer) {
+          writer.onwrite = function (evt) {
+              console.log("write success");
+              debug.log("ERROR",evt);
+              listDir();
+          };
+          writer.write(BINARY_ARR);
+          debug.log("ERROR","write success");
+      }, function (error) {
+          console.log(error);
+      });
+  }
+  function fail() {
+      console.log('getFS failed');
+      debug.log("ERROR","write success");
+  }
+}
+
+
+/*
+function onDeviceReady(){
     /*
     // Note: The file system has been prefixed as of Google Chrome 12:
 
@@ -22,7 +105,7 @@ function onDeviceReady(){
     {
         debug.log("ERROR",err);
         debug.log("ERROR","No device detected!");
-    }*/
+    }
 
 
 
@@ -73,7 +156,7 @@ function onDeviceReady(){
         });
 
         justForTesting();
-        */
+        
 
   }
   catch(err) 
@@ -111,7 +194,7 @@ function justForTesting() {
   }, fail);
 
 }
-*/
+
 
 function dnloadRemoteFile(gPersistantPath) {
 
@@ -146,7 +229,7 @@ function dnloadRemoteFile(gPersistantPath) {
             }            
     );
 }
-
+*/
 /*
 function errorHandler(e) {
   var msg = '';
