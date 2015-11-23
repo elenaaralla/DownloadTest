@@ -8,7 +8,7 @@ var root;
 
 function onDeviceReady(){
 
-    var dte = new Date(), attachApi, fileData, UTF8_STR, BINARY_ARR, dataString = JSON.stringify({
+    var dte = new Date(), attachApi, gPersistantPath, fileData, UTF8_STR, BINARY_ARR, dataString = JSON.stringify({
         accountID: '309'
     });
 
@@ -43,12 +43,13 @@ function onDeviceReady(){
     function getFS() {
      try
       {
+        alert("try to load device filesystem");
         debug.log("ERROR","getFS");
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
       }
       catch(err) 
       {
-
+        alert("catch loading device filesystem; no device!");
           debug.log("ERROR",err);
           debug.log("ERROR","No device detected!");
         attachUri = encodeURI(attachApi);   
@@ -59,31 +60,51 @@ function onDeviceReady(){
     }
 
   function gotFS(fileSystem) {
-      fileSystem.root.getDirectory("MyDIR", { create: true }, gotDir);
-      debug.log("ERROR",fileSystem);
+
+      if(device.platform === 'iOS'){
+          gPersistantPath = fileSystem.root.toInternalURL();
+          debug.log("ERROR","<br>IOS persistent file path: " + gPersistantPath);
+      }
+      else{
+          gPersistantPath = cordova.file.externalDataDirectory;
+          debug.log("ERROR","<br>ANDROID persistent file path: " + gPersistantPath);
+      }
+
+      gotDir(gPersistantPath);
+
+
+      //fileSystem.root.getDirectory("MyDIR", { create: true }, gotDir);
+      debug.log("ERROR",gPersistantPath);
+      alert(gPersistantPath);
   }
 
   function gotDir(dirEntry) {
-      dirEntry.getFile("MyFILE" + dte + ".pdf", { create: true, exclusive: false }, gotFile);
+      alert("gotDir");
+      dirEntry.getFile("MyFILE" + dte + ".txt", { create: true, exclusive: false }, gotFile);
       debug.log("ERROR",dirEntry);
   }
 
   function gotFile(fileEntry) {
+    alert(fileEntry);
       fileEntry.createWriter(function (writer) {
           writer.onwrite = function (evt) {
               console.log("write success");
+              alert("write success");
               debug.log("ERROR",evt);
               listDir();
           };
           writer.write(BINARY_ARR);
           debug.log("ERROR","write success");
       }, function (error) {
+          alert("gotFile error:" + error)
           console.log(error);
+          debug.log("ERROR",error);
       });
   }
   function fail() {
       console.log('getFS failed');
       debug.log("ERROR","write success");
+      alert("get filesystem fails");
   }
 }
 
