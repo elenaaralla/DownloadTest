@@ -51,10 +51,10 @@ function onDeviceReady(){
 
         window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
             alert("got main dir:" + dir.toNativeURL());
-            debug.log("ERROR","got main dir:"+dir);
-            dir.getFile("log.txt", {create:true}, function(file) {
+            debug.log("ERROR","got main dir:"+dir.toNativeURL());
+            dir.getFile("log.txt", {create:true, exclusive: false}, gotFile, fail);/* function(file) {
                 alert("got the file:"+file.toNativeURL());
-                debug.log("ERROR","got the file:"+file);
+                debug.log("ERROR","got the file:"+file.toNativeURL());*/
             });
         });        
 
