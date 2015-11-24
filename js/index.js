@@ -63,20 +63,24 @@ function onDeviceReady(){
     }
 
   function gotFS(fileSystem) {
-      alert("gotFS:" + fileSystem.toURL());
+      alert("gotFS:");
       fileSystem.root.getDirectory("MyDIR", { create: true }, gotDir, fail);
       debug.log("ERROR","gotFS:" + fileSystem);
       
   }
 
   function gotDir(dirEntry) {
-      alert("gotDir:" + dirEntry.toURL());
-      dirEntry.getFile("MyFILE" + dte + ".txt", { create: true, exclusive: false }, gotFile);
-      debug.log("ERROR",dirEntry);
+      alert("gotDir");
+      alert(dirEntry);
+      dirEntry.getFile("MyFILE" + dte + ".txt", { create: true, exclusive: false }, gotFile, fail);
+      debug.log("ERROR","gotDir:" + dirEntry);
   }
 
   function gotFile(fileEntry) {
+    alert("gotFile");
     alert(fileEntry);
+    debug.log("ERROR","gotFile:"+fileEntry);
+
       fileEntry.createWriter(function (writer) {
           writer.onwrite = function (evt) {
               console.log("write success");
