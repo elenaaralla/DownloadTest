@@ -28,12 +28,12 @@ function onDeviceReady(){
         //dataType: 'application/octet-stream',
         success: function (response) { 
           alert(response);
-          /*fileData = response.d;
+          fileData = response.d;
           alert(fileData);
           UTF8_STR = new Uint8Array(response.d);  // Convert to UTF-8...    
           alert(UTF8_STR);            
           BINARY_ARR = UTF8_STR.buffer; // Convert to buffer...
-          alert(BINARY_ARR);  */  
+          alert(BINARY_ARR);
           getFS();  
         },
         error: function (error) {
@@ -94,16 +94,22 @@ function onDeviceReady(){
 
       fileEntry.createWriter(function (writer) {
           writer.onwrite = function (evt) {
-              console.log("write success");
               alert("write success");
               debug.log("ERROR",evt);
               listDir();
           };
-          writer.write(BINARY_ARR);
-          debug.log("ERROR","write success");
+          /*writer.write(BINARY_ARR);*/
+
+writer.seek(writer.length);
+    
+    var blob = new Blob(["TEST: [" + (new Date()) + "]\n"], {type:'text/plain'});
+    writer.write(blob);          
+
+
+          debug.log("ERROR",blob);
+          debug.log("ERROR",writer);
       }, function (error) {
           alert("gotFile error:" + error)
-          console.log(error);
           debug.log("ERROR",error);
       });
   }
