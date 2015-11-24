@@ -28,12 +28,12 @@ function onDeviceReady(){
         //dataType: 'application/octet-stream',
         success: function (response) { 
           alert(response);
-          fileData = response.d;
+          /*fileData = response.d;
           alert(fileData);
           UTF8_STR = new Uint8Array(response.d);  // Convert to UTF-8...    
           alert(UTF8_STR);            
           BINARY_ARR = UTF8_STR.buffer; // Convert to buffer...
-          alert(BINARY_ARR);
+          alert(BINARY_ARR);*/
           getFS();  
         },
         error: function (error) {
