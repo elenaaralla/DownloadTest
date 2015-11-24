@@ -3,7 +3,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 // debug - per provare senza ripple document.addEventListener("DOMContentLoaded", onDeviceReady, false);
 
-var debug = new DebugLog();
+var debug = new DebugLog(), logOb;
 var root;
 
 function onDeviceReady(){
@@ -52,10 +52,11 @@ function onDeviceReady(){
         window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
             alert("got main dir:" + dir.toNativeURL());
             debug.log("ERROR","got main dir:"+dir.toNativeURL());
-            dir.getFile("log.txt", {create:true, exclusive: false}, gotFile, fail);/* function(file) {
+            dir.getFile("log.txt", {create:true, exclusive: false}, function(file) {
                 alert("got the file:"+file.toNativeURL());
-                debug.log("ERROR","got the file:"+file.toNativeURL());
-            });*/
+                debug.log("ERROR","got the file:"+file);
+                logOb = file;
+                writeLog("App started");  }, fail);
         });        
 
         //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
@@ -71,6 +72,22 @@ function onDeviceReady(){
 
 
     }
+
+function writeLog(str) {
+  if(!logOb) return;
+  var log = str + " [" + (new Date()) + "]\n";
+  console.log("going to log "+log);
+  logOb.createWriter(function(fileWriter) {
+    
+    fileWriter.seek(fileWriter.length);
+    
+    var blob = new Blob([log], {type:'text/plain'});
+    fileWriter.write(blob);
+    console.log("ok, in theory i worked");
+  }, fail);
+}
+
+
 
   function gotFS(fileSystem) {
       alert("gotFS:");
