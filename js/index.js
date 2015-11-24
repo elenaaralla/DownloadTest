@@ -54,8 +54,8 @@ function onDeviceReady(){
             debug.log("ERROR","got main dir:"+dir.toNativeURL());
             dir.getFile("log.txt", {create:true, exclusive: false}, gotFile, fail);/* function(file) {
                 alert("got the file:"+file.toNativeURL());
-                debug.log("ERROR","got the file:"+file.toNativeURL());*/
-            });
+                debug.log("ERROR","got the file:"+file.toNativeURL());
+            });*/
         });        
 
         //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
