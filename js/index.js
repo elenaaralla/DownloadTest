@@ -50,15 +50,15 @@ function onDeviceReady(){
         debug.log("ERROR","getFS");
 
         window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
-            alert("got main dir:"+dir);
+            alert("got main dir:" + dir.toNativeURL());
             debug.log("ERROR","got main dir:"+dir);
             dir.getFile("log.txt", {create:true}, function(file) {
-                alert("got the file:"+file);
+                alert("got the file:"+file.toNativeURL());
                 debug.log("ERROR","got the file:"+file);
             });
         });        
 
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+        //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
       }
       catch(err) 
       {
@@ -82,8 +82,9 @@ function onDeviceReady(){
   function gotDir(dirEntry) {
       alert("gotDir");
       alert(dirEntry);
-      dirEntry.getFile("MyFILE" + dte + ".txt", { create: true, exclusive: false }, gotFile, fail);
       debug.log("ERROR","gotDir:" + dirEntry);
+      dirEntry.getFile("MyFILE" + dte + ".txt", { create: true, exclusive: false }, gotFile, fail);
+      
   }
 
   function gotFile(fileEntry) {
