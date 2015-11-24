@@ -97,14 +97,20 @@ function onDeviceReady(){
               alert("write success");
               debug.log("ERROR",evt);
               listDir();
+              alert("write success 2");
           };
           /*writer.write(BINARY_ARR);*/
 
 writer.seek(writer.length);
+
+alert(writer.length);
+alert("write success 3");
     
     var blob = new Blob(["TEST: [" + (new Date()) + "]\n"], {type:'text/plain'});
+    alert(blob);
     writer.write(blob);          
-
+alert(blob);
+alert("write success 4");
 
           debug.log("ERROR",blob);
           debug.log("ERROR",writer);
