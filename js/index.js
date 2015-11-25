@@ -27,7 +27,6 @@ function onDeviceReady(){
         crossDomain: false,
         //dataType: 'application/octet-stream',
         success: function (response) { 
-          alert(response);
           /*fileData = response.d;
           alert(fileData);
           UTF8_STR = new Uint8Array(response.d);  // Convert to UTF-8...    
@@ -46,15 +45,12 @@ function onDeviceReady(){
     function getFS() {
      try
       {
-        alert("try to load device filesystem");
-        debug.log("ERROR","getFS");
-
         window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
             alert("got main dir:" + dir.toNativeURL());
             debug.log("ERROR","got main dir:"+dir.toNativeURL());
             dir.getFile("log.txt", {create:true, exclusive: false}, function(file) {
                 alert("got the file:"+file.toNativeURL());
-                debug.log("ERROR","got the file:"+file);
+                debug.log("ERROR","got the file:"+file.toNativeURL());
                 logOb = file;
                 writeLog("App started");  }, fail);
         });        
@@ -74,16 +70,28 @@ function onDeviceReady(){
     }
 
 function writeLog(str) {
-  if(!logOb) return;
+
+  alert("writeLog:"+str);
+  debug.log("ERROR","writeLog:"+str);
+
+  if(!logOb)
+  { 
+    alert("writeLog: no logOb");
+    debug.log("ERROR","writeLog: no logOb");    
+    return;
+  }
   var log = str + " [" + (new Date()) + "]\n";
-  console.log("going to log "+log);
+  alert("going to log "+log);
+  debug.log("ERROR","going to log "+log);  
   logOb.createWriter(function(fileWriter) {
     
     fileWriter.seek(fileWriter.length);
     
     var blob = new Blob([log], {type:'text/plain'});
     fileWriter.write(blob);
-    console.log("ok, in theory i worked");
+
+    alert("ok, in theory i worked");
+    debug.log("ERROR","ok, in theory i worked");      
   }, fail);
 }
 
