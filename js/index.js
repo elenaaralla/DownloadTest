@@ -184,10 +184,12 @@ function onDeviceReady(){
     if(device.platform === 'iOS'){
       gPersistantPath = fileSystem.root.toInternalURL(); 
       debug.log("ERROR","<br>IOS persistent file path: " + gPersistantPath);
+      $("#result").append("<br>gPersistantPath ios:" + gPersistantPath);
     }
     else{
       gPersistantPath = cordova.file.externalDataDirectory;
       debug.log("ERROR","<br>ANDROID persistent file path: " + gPersistantPath);
+      $("#result").append("<br>gPersistantPath android:" + gPersistantPath);
     }
 
     dnloadRemoteFile(gPersistantPath);
@@ -255,7 +257,8 @@ function dnloadRemoteFile(gPersistantPath) {
 
     ///api/attachments/" + attach_id + "/test
     var uri = encodeURI("http://192.168.0.10/asxmob/api/attachments/21/test");
-
+    $("#result").append("filetransfer encoded uri:" + uri);
+    $("#result").append("filetransferfileURL:" + fileURL);
     fileTransfer.download(
             uri,
             fileURL,
