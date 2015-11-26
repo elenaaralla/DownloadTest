@@ -3,12 +3,15 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 // debug - per provare senza ripple document.addEventListener("DOMContentLoaded", onDeviceReady, false);
 
-var debug = new DebugLog(), logOb;
+var debug = new DebugLog();
 var root;
 
+
+/*
 function onDeviceReady(){
 
-    var dte = new Date(), attachApi, gPersistantPath, fileData, UTF8_STR, BINARY_ARR, dataString = JSON.stringify({
+
+    var dte = new Date(), logOb, attachApi, gPersistantPath, fileData, UTF8_STR, BINARY_ARR, dataString = JSON.stringify({
         accountID: '309'
     });
 
@@ -27,12 +30,12 @@ function onDeviceReady(){
         crossDomain: false,
         //dataType: 'application/octet-stream',
         success: function (response) { 
-          /*fileData = response.d;
-          alert(fileData);
-          UTF8_STR = new Uint8Array(response.d);  // Convert to UTF-8...    
-          alert(UTF8_STR);            
-          BINARY_ARR = UTF8_STR.buffer; // Convert to buffer...
-          alert(BINARY_ARR);*/
+          //fileData = response.d;
+          //alert(fileData);
+          //UTF8_STR = new Uint8Array(response.d);  // Convert to UTF-8...    
+          //alert(UTF8_STR);            
+          //BINARY_ARR = UTF8_STR.buffer; // Convert to buffer...
+          //alert(BINARY_ARR);
           getFS();  
         },
         error: function (error) {
@@ -48,7 +51,7 @@ function onDeviceReady(){
         window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
             alert("got main dir:" + dir.toNativeURL());
             debug.log("ERROR","got main dir:"+dir.toNativeURL());
-            dir.getFile("log.txt", {create:true, exclusive: false}, function(file) {
+            dir.getFile("log.txt", {create:true}, function(file) {
                 alert("got the file:"+file.toNativeURL());
                 debug.log("ERROR","got the file:"+file.toNativeURL());
                 logOb = file;
@@ -124,7 +127,7 @@ function writeLog(str) {
               listDir();
               alert("write success 2");
           };
-          /*writer.write(BINARY_ARR);*/
+          //writer.write(BINARY_ARR);
 
 writer.seek(writer.length);
 
@@ -150,9 +153,9 @@ alert("write success 4");
       debug.log("ERROR","error:" + err.code);
   }
 }
+*/
 
 
-/*
 function onDeviceReady(){
     /*
     // Note: The file system has been prefixed as of Google Chrome 12:
@@ -170,7 +173,7 @@ function onDeviceReady(){
         debug.log("ERROR",err);
         debug.log("ERROR","No device detected!");
     }
-
+*/
 
 
   function onSuccess(fileSystem) {
@@ -202,31 +205,14 @@ function onDeviceReady(){
       // request the persistent file system
       $("#result").append("<br>Request the persistent file system");
       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onSuccess, onError); 
-
-/*
-      window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
-          console.log("got main dir",dir);
-          $("#result").append("<br>got main dir:" + dir.toURL());
-          debug.log("ERROR","got main dir:" + dir.toInternalURL());          
-          dir.getFile("log.txt", {create:true}, function(file) {
-            console.log("got the file", file);
-
-            $("#result").append("<br>got the file:" +  file.toURL());
-            debug.log("ERROR","got the file:" +  file.toInternalURL());  
-
-            logOb = file;
-            writeLog("App started");      
-          });
-        });
-
-        justForTesting();
-        
-
   }
   catch(err) 
   {
       $("#result").append("<br>Catch errors:" + err);
-      debug.log("ERROR",err);
+        debug.log("ERROR",err);
+        debug.log("ERROR","No device detected! It's a browser call.");
+        attachUri = "http://192.168.0.10/asxmob/api/attachments/21/test";   
+        document.location.href = attachUri;
   }
 
 }
@@ -258,7 +244,7 @@ function justForTesting() {
   }, fail);
 
 }
-
+*/
 
 function dnloadRemoteFile(gPersistantPath) {
 
@@ -268,7 +254,7 @@ function dnloadRemoteFile(gPersistantPath) {
     var fileTransfer = new FileTransfer();
 
     ///api/attachments/" + attach_id + "/test
-    var uri = encodeURI("http://192.168.0.10/asxmob/api/attachments/0/test");
+    var uri = encodeURI("http://192.168.0.10/asxmob/api/attachments/21/test");
 
     fileTransfer.download(
             uri,
@@ -287,13 +273,14 @@ function dnloadRemoteFile(gPersistantPath) {
             },
             false,
             {
-                headers: {
-                    Connection: "close"
-                }
+              headers:{
+                  "Accept":"application/octet-stream",
+                  "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+              }
             }            
     );
 }
-*/
+
 /*
 function errorHandler(e) {
   var msg = '';
