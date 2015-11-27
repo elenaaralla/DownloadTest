@@ -6,164 +6,11 @@ document.addEventListener("deviceready", onDeviceReady, false);
 var debug = new DebugLog();
 var root;
 
-
-/*
-function onDeviceReady(){
-
-
-    var dte = new Date(), logOb, attachApi, gPersistantPath, fileData, UTF8_STR, BINARY_ARR, dataString = JSON.stringify({
-        accountID: '309'
-    });
-
-
-    cAttachId = 885;
-    method = "GET";
-    apiPath = "/api/attachments/" + cAttachId + "/test";   
-    bodyContent = "";
-
-    attachApi = "http://192.168.0.10/asxmob" + apiPath;
-
-    $.ajax({
-        url: attachApi,
-        type: method,
-        headers: {'Accept':'application/octet-stream', 'Timestamp':'123456', 'Authentication':'abcdefg'},     
-        crossDomain: false,
-        //dataType: 'application/octet-stream',
-        success: function (response) { 
-          //fileData = response.d;
-          //alert(fileData);
-          //UTF8_STR = new Uint8Array(response.d);  // Convert to UTF-8...    
-          //alert(UTF8_STR);            
-          //BINARY_ARR = UTF8_STR.buffer; // Convert to buffer...
-          //alert(BINARY_ARR);
-          getFS();  
-        },
-        error: function (error) {
-            alert(error);
-            debug.log("ERROR",error);
-        }
-    });
-
-
-    function getFS() {
-     try
-      {
-        window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
-            alert("got main dir:" + dir.toNativeURL());
-            debug.log("ERROR","got main dir:"+dir.toNativeURL());
-            dir.getFile("log.txt", {create:true}, function(file) {
-                alert("got the file:"+file.toNativeURL());
-                debug.log("ERROR","got the file:"+file.toNativeURL());
-                logOb = file;
-                writeLog("App started");  }, fail);
-        });        
-
-        //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-      }
-      catch(err) 
-      {
-        alert("catch loading device filesystem; no device!");
-          debug.log("ERROR",err);
-          debug.log("ERROR","No device detected!");
-        attachUri = encodeURI(attachApi);   
-        document.location.href = attachUri;          
-      }
-
-
-    }
-
-function writeLog(str) {
-
-  alert("writeLog:"+str);
-  debug.log("ERROR","writeLog:"+str);
-
-  if(!logOb)
-  { 
-    alert("writeLog: no logOb");
-    debug.log("ERROR","writeLog: no logOb");    
-    return;
-  }
-  var log = str + " [" + (new Date()) + "]\n";
-  alert("going to log "+log);
-  debug.log("ERROR","going to log "+log);  
-  logOb.createWriter(function(fileWriter) {
-    
-    fileWriter.seek(fileWriter.length);
-    
-    var blob = new Blob([log], {type:'text/plain'});
-    fileWriter.write(blob);
-
-    alert("ok, in theory i worked");
-    debug.log("ERROR","ok, in theory i worked");      
-  }, fail);
-}
-
-
-
-  function gotFS(fileSystem) {
-      alert("gotFS:");
-      fileSystem.root.getDirectory("MyDIR", { create: true }, gotDir, fail);
-      debug.log("ERROR","gotFS:" + fileSystem);
-      
-  }
-
-  function gotDir(dirEntry) {
-      alert("gotDir");
-      alert(dirEntry);
-      debug.log("ERROR","gotDir:" + dirEntry);
-      dirEntry.getFile("MyFILE" + dte + ".txt", { create: true, exclusive: false }, gotFile, fail);
-      
-  }
-
-  function gotFile(fileEntry) {
-    alert("gotFile");
-    alert(fileEntry);
-    debug.log("ERROR","gotFile:"+fileEntry);
-
-      fileEntry.createWriter(function (writer) {
-          writer.onwrite = function (evt) {
-              alert("write success");
-              debug.log("ERROR",evt);
-              listDir();
-              alert("write success 2");
-          };
-          //writer.write(BINARY_ARR);
-
-writer.seek(writer.length);
-
-alert(writer.length);
-alert("write success 3");
-    
-    var blob = new Blob(["TEST: [" + (new Date()) + "]\n"], {type:'text/plain'});
-    alert(blob);
-    writer.write(blob);          
-alert(blob);
-alert("write success 4");
-
-          debug.log("ERROR",blob);
-          debug.log("ERROR",writer);
-      }, function (error) {
-          alert("gotFile error:" + error)
-          debug.log("ERROR",error);
-      });
-  }
-  function fail(error) {
-      debug.log("ERROR","fail:"+ error);
-      alert("fail:" + error);
-      debug.log("ERROR","error:" + err.code);
-  }
-}
-*/
-
-
 function onDeviceReady(){
     /*
     // Note: The file system has been prefixed as of Google Chrome 12:
-
     $("#result").append("Start filetransfer");
-
     window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem
-
     try
     {
       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onInitFs, errorHandler);
@@ -172,8 +19,8 @@ function onDeviceReady(){
     {
         debug.log("ERROR",err);
         debug.log("ERROR","No device detected!");
-    }
-*/
+    }*/
+
 
 
   function onSuccess(fileSystem) {
@@ -184,12 +31,10 @@ function onDeviceReady(){
     if(device.platform === 'iOS'){
       gPersistantPath = fileSystem.root.toInternalURL(); 
       debug.log("ERROR","<br>IOS persistent file path: " + gPersistantPath);
-      $("#result").append("<br>gPersistantPath ios:" + gPersistantPath);
     }
     else{
       gPersistantPath = cordova.file.externalDataDirectory;
       debug.log("ERROR","<br>ANDROID persistent file path: " + gPersistantPath);
-      $("#result").append("<br>gPersistantPath android:" + gPersistantPath);
     }
 
     dnloadRemoteFile(gPersistantPath);
@@ -207,14 +52,28 @@ function onDeviceReady(){
       // request the persistent file system
       $("#result").append("<br>Request the persistent file system");
       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onSuccess, onError); 
+
+/*
+      window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
+          console.log("got main dir",dir);
+          $("#result").append("<br>got main dir:" + dir.toURL());
+          debug.log("ERROR","got main dir:" + dir.toInternalURL());          
+          dir.getFile("log.txt", {create:true}, function(file) {
+            console.log("got the file", file);
+            $("#result").append("<br>got the file:" +  file.toURL());
+            debug.log("ERROR","got the file:" +  file.toInternalURL());  
+            logOb = file;
+            writeLog("App started");      
+          });
+        });
+        justForTesting();
+        */
+
   }
   catch(err) 
   {
       $("#result").append("<br>Catch errors:" + err);
-        debug.log("ERROR",err);
-        debug.log("ERROR","No device detected! It's a browser call.");
-        attachUri = "http://192.168.0.10/asxmob/api/attachments/21/test";   
-        document.location.href = attachUri;
+      debug.log("ERROR",err);
   }
 
 }
@@ -233,18 +92,14 @@ function writeLog(str) {
     console.log("ok, in theory i worked");
   }, fail);
 }
-
 function justForTesting() {
   logOb.file(function(file) {
     var reader = new FileReader();
-
     reader.onloadend = function(e) {
       console.log(this.result);
     };
-
     reader.readAsText(file);
   }, fail);
-
 }
 */
 
@@ -256,9 +111,8 @@ function dnloadRemoteFile(gPersistantPath) {
     var fileTransfer = new FileTransfer();
 
     ///api/attachments/" + attach_id + "/test
-    var uri = encodeURI("http://192.168.0.10/asxmob/api/attachments/21/test");
-    $("#result").append("filetransfer encoded uri:" + uri);
-    $("#result").append("filetransferfileURL:" + fileURL);
+    var uri = encodeURI("http://192.168.0.10/asxmob/api/attachments/0/test");
+
     fileTransfer.download(
             uri,
             fileURL,
@@ -276,10 +130,9 @@ function dnloadRemoteFile(gPersistantPath) {
             },
             false,
             {
-              headers:{
-                  "Accept":"application/octet-stream",
-                  "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
-              }
+                headers: {
+                    Connection: "close"
+                }
             }            
     );
 }
@@ -287,7 +140,6 @@ function dnloadRemoteFile(gPersistantPath) {
 /*
 function errorHandler(e) {
   var msg = '';
-
   switch (e.code) {
     case FileError.QUOTA_EXCEEDED_ERR:
       msg = 'QUOTA_EXCEEDED_ERR';
@@ -308,7 +160,6 @@ function errorHandler(e) {
       msg = 'Unknown Error';
       break;
   };
-
   debug.log("ERROR",'Error: ' + msg);
 }
 */
