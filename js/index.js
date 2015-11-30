@@ -69,7 +69,8 @@ function dnloadRemoteFile(gPersistantPath) {
                 headers: {
                     "Connection": "close",
                     "Accept":"application/octet-stream",
-                    "Authorization": "test-ele"
+                    "Timestamp": "123456",
+                    "Authentication": "elena",
                 }
             }            
     );
