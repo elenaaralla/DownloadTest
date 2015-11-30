@@ -71,7 +71,6 @@ function dnloadRemoteFile(gPersistantPath) {
                     "Accept":"application/octet-stream",
                     "Timestamp": "123456",
                     "Authentication": "elena",
-                    "Authorization": "Basic   dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==",
                 }
             }            
     );
