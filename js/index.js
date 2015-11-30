@@ -7,110 +7,46 @@ var debug = new DebugLog();
 var root;
 
 function onDeviceReady(){
-    /*
-    // Note: The file system has been prefixed as of Google Chrome 12:
-    $("#result").append("Start filetransfer");
-    window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem
-    try
-    {
-      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onInitFs, errorHandler);
-    }
-    catch(err) 
-    {
-        debug.log("ERROR",err);
-        debug.log("ERROR","No device detected!");
-    }*/
-
-
-
-  function onSuccess(fileSystem) {
-    // methods/properties for file path:
-    // fileSystem.name, fileSystem.root.toURL(), fileSystem.root.toInternalURL(), fileSystem.root.nativeURL
-
-    //gFileSystemVar = fileSystem;
-    if(device.platform === 'iOS'){
-      gPersistantPath = fileSystem.root.toInternalURL(); 
-      debug.log("ERROR","<br>IOS persistent file path: " + gPersistantPath);
-    }
-    else{
-      gPersistantPath = cordova.file.externalDataDirectory;
-      debug.log("ERROR","<br>ANDROID persistent file path: " + gPersistantPath);
-    }
-
-    dnloadRemoteFile(gPersistantPath);
-
-  }
-
-  function onError(fileSystem) {
-    // Error ocurred while calling requestFileSystem.
-    $("#result").append("<br>Error in accessing requestFileSystem" + fileSystem.name);
-    debug.log("ERROR","Error in accessing requestFileSystem" + fileSystem.name);
-  }
-
   try
   {
       // request the persistent file system
       $("#result").append("<br>Request the persistent file system");
       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onSuccess, onError); 
-
-/*
-      window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
-          console.log("got main dir",dir);
-          $("#result").append("<br>got main dir:" + dir.toURL());
-          debug.log("ERROR","got main dir:" + dir.toInternalURL());          
-          dir.getFile("log.txt", {create:true}, function(file) {
-            console.log("got the file", file);
-            $("#result").append("<br>got the file:" +  file.toURL());
-            debug.log("ERROR","got the file:" +  file.toInternalURL());  
-            logOb = file;
-            writeLog("App started");      
-          });
-        });
-        justForTesting();
-        */
-
   }
   catch(err) 
   {
       $("#result").append("<br>Catch errors:" + err);
       debug.log("ERROR",err);
   }
+}
+
+function onSuccess(fileSystem) {
+  if(device.platform === 'iOS'){
+    gPersistantPath = fileSystem.root.toInternalURL(); 
+    debug.log("ERROR","<br>IOS persistent file path: " + gPersistantPath);
+  }
+  else{
+    gPersistantPath = cordova.file.externalDataDirectory;
+    debug.log("ERROR","<br>ANDROID persistent file path: " + gPersistantPath);
+  }
+
+  dnloadRemoteFile(gPersistantPath);
 
 }
 
-/*
-function writeLog(str) {
-  if(!logOb) return;
-  var log = str + " [" + (new Date()) + "]\n";
-  console.log("going to log "+log);
-  logOb.createWriter(function(fileWriter) {
-    
-    fileWriter.seek(fileWriter.length);
-    
-    var blob = new Blob([log], {type:'text/plain'});
-    fileWriter.write(blob);
-    console.log("ok, in theory i worked");
-  }, fail);
+function onError(fileSystem) {
+  // Error ocurred while calling requestFileSystem.
+  $("#result").append("<br>Error in accessing requestFileSystem" + fileSystem.name);
+  debug.log("ERROR","Error in accessing requestFileSystem" + fileSystem.name);
 }
-function justForTesting() {
-  logOb.file(function(file) {
-    var reader = new FileReader();
-    reader.onloadend = function(e) {
-      console.log(this.result);
-    };
-    reader.readAsText(file);
-  }, fail);
-}
-*/
+
 
 function dnloadRemoteFile(gPersistantPath) {
-
     //gPersistantPath = file:///mnt/sdcard/Android/data/com.phonegap.DownloadTest/files/
     var fileURL = gPersistantPath + "test.txt"; 
 
     var fileTransfer = new FileTransfer();
 
-    ///api/attachments/" + attach_id + "/test
     var uri = encodeURI("http://192.168.0.10/asxmob/api/attachments/885/test");
 
     fileTransfer.download(
@@ -131,69 +67,10 @@ function dnloadRemoteFile(gPersistantPath) {
             false,
             {
                 headers: {
-                    Connection: "close"
+                    "Connection": "close",
+                    "Accept":"application/octet-stream",
+                    "Authorization": "test-ele"
                 }
             }            
     );
 }
-
-/*
-function errorHandler(e) {
-  var msg = '';
-  switch (e.code) {
-    case FileError.QUOTA_EXCEEDED_ERR:
-      msg = 'QUOTA_EXCEEDED_ERR';
-      break;
-    case FileError.NOT_FOUND_ERR:
-      msg = 'NOT_FOUND_ERR';
-      break;
-    case FileError.SECURITY_ERR:
-      msg = 'SECURITY_ERR';
-      break;
-    case FileError.INVALID_MODIFICATION_ERR:
-      msg = 'INVALID_MODIFICATION_ERR';
-      break;
-    case FileError.INVALID_STATE_ERR:
-      msg = 'INVALID_STATE_ERR';
-      break;
-    default:
-      msg = 'Unknown Error';
-      break;
-  };
-  debug.log("ERROR",'Error: ' + msg);
-}
-*/
-
-/*
-function onDeviceReady() {
-  $("#result").append("Start filetransfer");
-  apiURL = "http://192.168.0.10/asxmob/api/attachments/0/test";
-    uri = encodeURI(apiURL);   
-    fileName = "VOLANTINO 2015 pdf.pdf";
-    fileURL = "cdvfile://localhost/persistent/" + fileName;
-    try
-    {
-    var fileTransfer = new FileTransfer();
-      alert("FileTransfer exists!!");
-      $("#result").append("<br>FileTransfer exists!!");
-      debug.log("ERROR","OK - FileTransfer exists!!");
-      fileTransfer.download(uri, fileURL,
-        function (entry) {
-            alert("download complete! ")
-            $("#result").append("<br>download complete!");
-            debug.log("ERROR","download complete: " + entry.toURL());
-        },
-        function (error) {
-            alert("errore");
-            $("#result").append("<br>errore:" + error);
-            debug.log("ERROR",error);
-        });
-    }
-    catch(err) 
-    {
-        debug.log("ERROR","No device detected; it's a browser test; chatch error=" + err);
-         $("#result").append("<br>No device detected; it's a browser test; chatch error=" + err);
-        document.location.href =  apiURL;
-    }
-}
-*/
