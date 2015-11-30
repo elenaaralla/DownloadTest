@@ -8,7 +8,7 @@
         DownloadTest Team
     </author>
     <content src="index.html" />
-    <!--<preference name="phonegap-version" value="cli-5.1.1"/>-->
+    <preference name="phonegap-version" value="cli-5.2.2"/>
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
@@ -26,7 +26,6 @@
     <preference name="android-installLocation" value="auto" />
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <preference name="iosPersistentFileLocation" value="Library" />     
-    <preference name="BackupWebStorage" value="none" />
 
     <gap:plugin name="cordova-plugin-whitelist" version="1.0.0" source = "npm"/>
     <gap:plugin name="cordova-plugin-console" version="1.0.1" source = "npm"/>

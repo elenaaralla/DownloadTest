@@ -47,7 +47,7 @@ function dnloadRemoteFile(gPersistantPath) {
 
     var fileTransfer = new FileTransfer();
 
-    var uri = encodeURI("http://192.168.0.10/asxmob/api/attachments/885/test");
+    var uri = encodeURI("http://192.168.0.10/asxmob/api/attachments/869/test");
 
     fileTransfer.download(
             uri,
@@ -71,6 +71,7 @@ function dnloadRemoteFile(gPersistantPath) {
                     "Accept":"application/octet-stream",
                     "Timestamp": "123456",
                     "Authentication": "elena",
+                    "Authorization": "Basic   dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA==",
                 }
             }            
     );
